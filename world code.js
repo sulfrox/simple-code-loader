@@ -30,7 +30,7 @@ let registered_cbs = {};
 
 let tickFunc = ()=>{
     if(fully_loaded) {
-        func_list.tick();
+        return func_list.tick();
 	} else if(need_resetting) {
         actual_reloading();
     } else if(pointer!==CODEBLOCK_LOCATIONS.length) {
@@ -96,7 +96,7 @@ let tickFunc = ()=>{
 for(let cb of CALLBACKS) {
 	let f = function(...param) {
         //need to check if the callbacks are fully loaded here, as the world code init is expected to fail in case the init phase gets interrupted
-        if(fully_loaded && cb in registered_cbs)registered_cbs[cb](...param);
+        if(fully_loaded && cb in registered_cbs)return registered_cbs[cb](...param);
 	}
 	func_list[cb]=globalThis[cb]=f;
 }
